@@ -1,4 +1,4 @@
-</div> <!-- Close container -->
+</div> 
 
 <footer class="text-center p-3 bg-dark text-white">
     <p>&copy; <?php echo date("Y"); ?> My Website. All rights reserved.</p>

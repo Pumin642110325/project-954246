@@ -1,7 +1,7 @@
 <?php 
 session_start();
-$title = "Login Page"; // ตั้งชื่อหน้า
-include_once __DIR__ . '/partials/layout.php'; 
+$title = "Login Page"; 
+include_once __DIR__ . '/partials/header.php'; 
 ?>
 
 <div class="row justify-content-center">
