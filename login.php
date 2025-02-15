@@ -6,7 +6,7 @@ include_once __DIR__ . '/partials/header.php';
 
 <div class="row justify-content-center">
     <div class="col-md-4">
-        <h2 class="text-center">Login</h2>
+        <h2 class="text-center mt-5 fw-bold">Login</h2>
 
         <?php if (isset($_SESSION['errors_msg'])): ?>
             <div class="alert alert-danger">

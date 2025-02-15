@@ -19,4 +19,5 @@ if (session_status() == PHP_SESSION_NONE) {
 </head>
 <body>
 
-<div class="container mt-4">
+<div class="d-flex flex-column min-vh-100 container-fluid p-0">
+    <div class="d-flex flex-column flex-grow-1">
