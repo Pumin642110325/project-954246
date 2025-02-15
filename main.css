@@ -1,0 +1,84 @@
+/* Reset Default Styles */
+html, body {
+    padding: 0;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Header Styling */
+.header {
+    text-align: center;
+    color: white;
+    background-color: #a52a2a;
+    padding: 15px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* Page Title */
+h1 {
+    text-align: center;
+    color: #333;
+    margin-top: 20px;
+}
+
+/* Center Content */
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #333;
+    color: white;
+}
+
+/* Alternating Row Colors */
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Action Links */
+a {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a[href*="edit"] {
+    color: #008CBA;
+}
+
+a[href*="delete"] {
+    color: #d9534f;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 15px;
+    background-color: #a52a2a;
+    color: white;
+    margin-top: 20px;
+}
