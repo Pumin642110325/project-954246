@@ -1,6 +1,7 @@
-<?php
-   session_start();
-   require_once "header.php";
+<?php 
+session_start();
+$title = "Home"; 
+include_once __DIR__ . '/partials/header.php'; 
 ?>
 <html>
    <body>
@@ -13,7 +14,7 @@
             </table>
          </div>
       </div>
-  <?php
+      <?php
    require_once "best.php";
    ?>
    </body>

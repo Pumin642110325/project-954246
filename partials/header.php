@@ -18,6 +18,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
+    
 
 <div class="d-flex flex-column min-vh-100 container-fluid p-0">
     <div class="d-flex flex-column flex-grow-1">
