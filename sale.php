@@ -1,5 +1,5 @@
 <?php
-   require_once "header.php";
+   include_once __DIR__ . '/partials/header.php'; 
 ?>
 <html>
     <body>
