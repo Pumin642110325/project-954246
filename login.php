@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <h1>Login</h1>
-        <input type="email" placeholder="Email">
+        <input type="user" placeholder="user">
         <input type="password" placeholder="Password">
         <div class="remember">
             <input type="checkbox" name="remember"> Remember me
