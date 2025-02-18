@@ -32,7 +32,7 @@
                 ?>
                 
                 <div class="table-responsive">
-                    <table class="table table-bordered table-hover text-center">
+                    <table class="table table-bordered table-hover">
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col">Name</th>
