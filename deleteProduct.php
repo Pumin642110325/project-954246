@@ -18,8 +18,7 @@ $stmt = $connect->prepare("DELETE FROM product WHERE productID = ?");
 $stmt->bind_param("i", $productID);
 
 if ($stmt->execute()) {
-    echo "<h3>Product deleted successfully.</h3>";
-    echo "<a href='displayProduct.php'>Back To Product List</a>";
+    header("Location: displayProduct.php");
 } else {
     echo "Error: " . $stmt->error;
 }

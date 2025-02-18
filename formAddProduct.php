@@ -10,10 +10,11 @@
 <body>
 <?php 
 include_once  './partials/layout.php'; 
+include_once  './partials/navbar.php'; 
 ?>
 
 
-<?php if($_SESSION['level']==4) { ?>
+<?php if($_SESSION['level']>=3) { ?>
     <form action="addProduct.php" method="post">
         <div class="head">
             <h2>Add New Product</h2>
