@@ -1,5 +1,4 @@
 <html>
-<link rel="stylesheet" href="main.css">
  <div class = error>
  <?php
 session_start();

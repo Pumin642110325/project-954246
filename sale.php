@@ -1,5 +1,5 @@
 <?php
-   include_once __DIR__ . '/partials/header.php'; 
+   include_once __DIR__ . '/partials/layout.php'; 
 ?>
 <html>
     <body>
