@@ -1,40 +1,48 @@
 <?php
-    $num1 = $_POST["num1"];
-    $num2 = $_POST["num2"];
-    $num3 = $_POST["num3"];
-    $type = $_POST["type"];
+session_start();
 
-    $total = ($num1*450)+($num2*580)+($num3*650);
-    $shipping = checkshipping($type);
+if (isset($_POST['add_to_cart'])) {
+    // รับค่าจากฟอร์ม
+    $productID = $_POST['productID'] ?? '';
+    $productName = $_POST['productName'] ?? '';
+    $price = $_POST['price'] ?? 0;
+    $quantity = $_POST['quantity'] ?? 1;
+    $picture = $_POST['picture'] ?? '';
 
-    $totalPrice = $total + $shipping;
-
-    $discount = dis($totalPrice) ;
-
-
-    $netprice = $totalPrice -$discount; 
-    
-?>
-<div class="result">
-    <p >Shipment Type :<i><?php echo $type ?> (<?php echo $shipping ?> THB)</i></p>
-    <p >Discount : <i> <?php echo $discount ?> </i></p>
-    <p >Net Price :<i><?php echo $netprice ?></i></p><br>
-    <p >Thank You Very Much</p>
-</div>
-<?php
-    function checkshipping($type){
-        if($type== "flash")
-            return $type = 40;
-        elseif($type == "EMS")
-            return $type = 50;
-        else
-            return $type = 60;
-    }
-    function dis($totalPrice){
-        if($totalPrice > 5000)
-            return $discount = 0.15*$totalPrice ;
-        elseif($totalPrice > 3000)
-            return $discount = 0.10*$totalPrice ;
+    // ตรวจสอบข้อมูลที่รับมา
+    if (empty($productID) || empty($productName) || $price <= 0 || $quantity <= 0) {
+        die("Error: ข้อมูลสินค้าไม่ถูกต้อง");
     }
 
+    // ตรวจสอบว่ามี session ตะกร้าสินค้าอยู่หรือยัง
+    if (!isset($_SESSION['cart'])) {
+        $_SESSION['cart'] = [];
+    }
+
+    // ค้นหาว่าสินค้าอยู่ในตะกร้าแล้วหรือไม่
+    $found = false;
+    foreach ($_SESSION['cart'] as &$item) {
+        if ($item['productID'] == $productID) {
+            $item['quantity'] += $quantity; // ถ้ามีอยู่แล้วให้เพิ่มจำนวน
+            $found = true;
+            break;
+        }
+    }
+    unset($item); // รีเซ็ต reference เพื่อป้องกันปัญหา
+
+    // ถ้ายังไม่มีสินค้า ให้เพิ่มเข้าไป
+    if (!$found) {
+        $_SESSION['cart'][] = [
+            'productID' => $productID,
+            'productName' => $productName,
+            'price' => $price,
+            'quantity' => $quantity,
+            'picture' => $picture
+        ];
+    }
+
+    // กลับไปที่หน้าตะกร้าสินค้า
+    header("Location: view_cart.php");
+    exit();
+}
 ?>

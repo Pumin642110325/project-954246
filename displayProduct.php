@@ -36,7 +36,7 @@ include_once "./partials/navbar.php";
                                 <th >Price</th>
                                 <th >Qty</th>
                                 <th >Picture</th>
-                                <?php if ($_SESSION['level'] >= 2): ?>
+                                <?php if ($_SESSION['level'] >= 3): ?>
                                     <th scope="col">Action</th>
                                 <?php endif; ?>
                             </tr>
@@ -55,7 +55,7 @@ include_once "./partials/navbar.php";
                                         <td><?= htmlspecialchars($row['qty']) ?></td>
                                         <td><img src="<?= htmlspecialchars($row['picture']) ?>" alt="Product Image"
                                                 class="img-thumbnail" width="80"></td>
-                                        <?php if ($_SESSION['level'] >= 2): ?>
+                                        <?php if ($_SESSION['level'] >= 3): ?>
                                             <td>
                                                 <a href='updateProduct.php?id=<?= $row['productID'] ?>'
                                                     class="btn btn-warning btn-sm">Edit</a>
