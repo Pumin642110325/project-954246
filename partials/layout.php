@@ -21,4 +21,4 @@ require_once "config.php";
 </head>
 <body>
 <div class="d-flex flex-column min-vh-100 container-fluid p-0">
-    <div class="d-flex flex-column flex-grow-1 pb-5">
+    <div class="d-flex flex-column flex-grow-1">

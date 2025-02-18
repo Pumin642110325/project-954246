@@ -26,7 +26,7 @@
                     echo '
                     <div class="d-flex justify-content-between">
                         <p class="fs-4 fw-bold">รายการเครื่องดนตรี</p>
-                        <a href="formAddProduct.php" class="btn btn-primary mb-3">Create New Product</a>
+                        <a href="formAddProduct.php" class="btn btn-warning mb-3">Create New Product</a>
                     </div>';
                 ?>
                 
