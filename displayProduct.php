@@ -9,7 +9,6 @@
             class="img-header-display-product"
         />
         <div class="container mt-4">
-           
             <div class="main-content">
                 <?php 
                 include_once "./partials/layout.php";

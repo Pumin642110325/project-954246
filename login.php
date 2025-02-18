@@ -5,17 +5,16 @@ include_once "config.php";
 include_once "./partials/layout.php";
 ?>
 
-<div class="row justify-content-center">
-    <div class="col-md-4">
-        <h2 class="text-center mt-5 fw-bold">Login</h2>
-
+<div class='d-flex flex-column flex-grow-1 container-fluid justify-content-center align-items-center'>
+    <div class="login-wrap">
+        <h2 class="text-center mt-5 fw-bold text-primary">Login</h2>
         <?php if (isset($_SESSION['errors_msg'])): ?>
             <div class="alert alert-danger">
                 <?php echo $_SESSION['errors_msg']; unset($_SESSION['errors_msg']); ?>
             </div>
         <?php endif; ?>
 
-        <form action="check-login.php" method="POST" class="border p-4 rounded shadow">
+        <form action="check-login.php" method="POST" class="border p-4 rounded shadow mt-1">
             <div class="mb-3">
                 <label for="username" class="form-label">Username:</label>
                 <input type="text" id="username" name="username" class="form-control" required>
