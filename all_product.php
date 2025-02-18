@@ -1,5 +1,5 @@
 <?php
-    require_once "header.php";
+    require_once "layout.php";
     ?>
     <div class="content">
     <div class="tablefirst">

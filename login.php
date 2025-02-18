@@ -2,6 +2,7 @@
 session_start();
 $title = "Login Page"; 
 include_once "config.php";
+include_once "./partials/layout.php";
 ?>
 
 <div class="row justify-content-center">
@@ -14,7 +15,7 @@ include_once "config.php";
             </div>
         <?php endif; ?>
 
-        <form action="index.php" method="POST" class="border p-4 rounded shadow">
+        <form action="check-login.php" method="POST" class="border p-4 rounded shadow">
             <div class="mb-3">
                 <label for="username" class="form-label">Username:</label>
                 <input type="text" id="username" name="username" class="form-control" required>

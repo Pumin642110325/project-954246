@@ -7,7 +7,7 @@ $price = $_POST['price'];
 $qty = $_POST['qty'];
 $picture = $_POST['picture'];
 
-$userQuery = "INSERT INTO product VALUES ('','$productName','$detail','$price','$qty','$picture')";
+$userQuery = "INSERT INTO product VALUES ('', '$productName', '$price', '$qty', '$detail', '$picture')";
 $result = mysqli_query($connect,$userQuery);
 
 if(!$result){

@@ -1,5 +1,5 @@
 <?php 
-include_once  './partials/header.php'; 
+include_once  './partials/layout.php'; 
 ?>
 <div class=img>
 <link type="text/css" rel="stylesheet" href="main.css">
