@@ -15,7 +15,7 @@
                 <ul class="navbar-nav">
                     <?php if (isset($_SESSION['username'])): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="logout.php">Logout</a>
+                            <a class="nav-link" href="login.php">Logout</a>
                         </li>
                         <li class="nav-item">
                             <span class="text-white nav-link">[ <?php echo $_SESSION['firstname'] . " " . $_SESSION['lastname'] . " - Level: " . $_SESSION['level']; ?> ]</span>
