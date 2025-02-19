@@ -15,6 +15,7 @@ $productCount = mysqli_num_rows($result);
 ?>
 
 <body>
+    <img src="./picture/background-violin-small.png" alt="background-header-violin" class="img-header-show-product" />
     <div class="container mt-4">
         <!-- Display product count -->
         <p class="fs-3 fw-bold">รายการสินค้า (<?= $productCount ?> รายการ)</p>

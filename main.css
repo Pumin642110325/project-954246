@@ -7,6 +7,10 @@
     font-family: 'Prompt', serif;
 }
 
+html, body{
+    background-color: rgb(247, 245, 245);
+}
+
 .login-wrap{
  max-width: 25rem;
 }
@@ -14,6 +18,12 @@
 .img-header-display-product{
     width: 100%;
     height: 30rem;
+    object-fit: cover;
+}
+
+.img-header-show-product{
+    width: 100%;
+    height: 20rem;
     object-fit: cover;
 }
 
