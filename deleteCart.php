@@ -11,5 +11,5 @@ if (isset($_GET['index'])) {
     }
 }
 
-header("Location: view_cart.php");
+header("Location: showCart.php");
 exit();

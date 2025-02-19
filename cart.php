@@ -42,7 +42,7 @@ if (isset($_POST['add_to_cart'])) {
     }
 
     // กลับไปที่หน้าตะกร้าสินค้า
-    header("Location: view_cart.php");
+    header("Location: showcart.php");
     exit();
 }
 ?>

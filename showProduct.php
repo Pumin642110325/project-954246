@@ -7,7 +7,7 @@ $userQuery = "SELECT * FROM product";
 $result = mysqli_query($connect, $userQuery);
 
 if (!$result) {
-  die("Query failed: " . mysqli_error($connect));
+    die("Query failed: " . mysqli_error($connect));
 }
 ?>
 
@@ -24,9 +24,22 @@ if (!$result) {
               <p class="card-text"><?= htmlspecialchars($row['detail']) ?></p>
               <p class="card-text"><strong>Price:</strong> <?= htmlspecialchars($row['price']) ?> บาท</p>
               <p class="card-text"><strong>Stock:</strong> <?= htmlspecialchars($row['qty']) ?></p>
+              
+              <!-- Form สำหรับเพิ่มสินค้าเข้าตะกร้า -->
+              <form action="cart.php" method="POST">
+                <input type="hidden" name="productID" value="<?= $row['productID'] ?>">
+                <input type="hidden" name="productName" value="<?= htmlspecialchars($row['productName']) ?>">
+                <input type="hidden" name="price" value="<?= $row['price'] ?>">
+                <input type="hidden" name="picture" value="<?= htmlspecialchars($row['picture']) ?>">
+                
+                <label for="quantity">Quantity:</label>
+                <input type="number" name="quantity" value="1" min="1" max="<?= $row['qty'] ?>" class="form-control mb-2">
+                
+                <button type="submit" name="add_to_cart" class="btn btn-warning">Add to Cart</button>
+              </form>
+
+              <a href='detail.php?id=<?= $row['productID'] ?>' class="btn btn-danger btn-sm">Detail</a>
             </div>
-            <a href='showCart.php?id=<?= $row['productID'] ?>' class="btn btn-warning btn-sm">Add Product</a>
-            <a href='detail.php?id=<?= $row['productID'] ?>' class="btn btn-danger btn-sm">Detail</a>
           </div>
         </div>
       <?php endwhile; ?>
