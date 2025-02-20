@@ -36,6 +36,6 @@ if (isset($_POST['add_to_cart'])) {
     }
 
     // กลับไปที่หน้าหลัก หรือไปที่หน้าตะกร้า
-    header("Location: view_cart.php");
+    header("Location: showCart.php");
     exit();
 }

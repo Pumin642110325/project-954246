@@ -1,6 +1,7 @@
 <?php
 session_start();
-
+include_once "./partials/layout.php";
+include_once "./partials/navbar.php";
 // ตรวจสอบว่ามีสินค้าในตะกร้าหรือไม่
 $cart = $_SESSION['cart'] ?? [];
 
@@ -24,12 +25,11 @@ $cart = $_SESSION['cart'] ?? [];
             <table class="table table-bordered table-hover">
                 <thead class="table-dark">
                     <tr>
-                        <th>สินค้า</th>
-                        <th>รายละเอียด</th>
+                        <th>รูปภาพ</th>
+                        <th>ชื่อสินค้า</th>
                         <th>ราคา</th>
                         <th>จำนวน</th>
                         <th>รวม</th>
-                        <th>อัปเดต</th>
                         <th>ลบ</th>
                     </tr>
                 </thead>
@@ -73,7 +73,7 @@ $cart = $_SESSION['cart'] ?? [];
             </table>
 
             <div class="mt-4">
-                <a href="showProduct.php" class="btn btn-secondary">🔙 กลับไปซื้อสินค้า</a>
+                <a href="showProduct.php" class="btn btn-outline-secondary">🔙 กลับไปซื้อสินค้า</a>
                 <a href="checkout.php" class="btn btn-success">✅ ชำระเงิน</a>
             </div>
         <?php endif; ?>

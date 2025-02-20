@@ -2,6 +2,7 @@
 include_once "./partials/layout.php";
 include_once "./partials/navbar.php";
 
+
 // ดึงข้อมูลจากฐานข้อมูล
 $userQuery = "SELECT * FROM product";
 $result = mysqli_query($connect, $userQuery);
@@ -15,7 +16,7 @@ $productCount = mysqli_num_rows($result);
 ?>
 
 <body>
-    <img src="./picture/background-violin-small.png" alt="background-header-violin" class="img-header-show-product" />
+<img src="./picture/background-violin-small.png" alt="background-header-violin" class="img-header-show-product" />
     <div class="container mt-4">
         <!-- Display product count -->
         <p class="fs-3 fw-bold">รายการสินค้า (<?= $productCount ?> รายการ)</p>
@@ -33,12 +34,26 @@ $productCount = mysqli_num_rows($result);
                         <p class="card-text my-1"><strong>Price:</strong> <?= htmlspecialchars($row['price']) ?> บาท</p>
                         <p class="card-text my-1"><strong>Stock:</strong> <?= htmlspecialchars($row['qty']) ?></p>
                     </div>
-                    <div class="d-flex justify-content-between gap-2 p-2">
+                    <div class="d-flex flex-column gap-2 p-2">
                         <a href='detail.php?id=<?= $row['productID'] ?>'
                             class="btn btn-light btn-sm w-100">รายละเอียด</a>
-                        <a href='showCart.php?id=<?= $row['productID'] ?>' class="btn btn-warning btn-sm w-100">
-                            <i class="bi bi-bag-plus" style="font-size: 1rem;"></i>
-                            ใส่ตะกร้า</a>
+
+                        <!-- Form สำหรับเพิ่มสินค้าเข้าตะกร้า -->
+                        <form action="cart.php" method="POST">
+                            <input type="hidden" name="productID" value="<?= $row['productID'] ?>">
+                            <input type="hidden" name="productName" value="<?= htmlspecialchars($row['productName']) ?>">
+                            <input type="hidden" name="price" value="<?= $row['price'] ?>">
+                            <input type="hidden" name="picture" value="<?= htmlspecialchars($row['picture']) ?>">
+
+                            <div class="d-flex">
+                                <input type="number" name="quantity" value="1" min="1" max="<?= $row['qty'] ?>"
+                                    class="form-control form-control-sm me-2" style="width: 60px;">
+                                <button type="submit" name="add_to_cart" class="btn btn-warning btn-sm w-100">
+                                    <i class="bi bi-bag-plus" style="font-size: 1rem;"></i>
+                                    ใส่ตะกร้า
+                                </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
