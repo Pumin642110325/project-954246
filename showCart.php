@@ -74,7 +74,7 @@ $cart = $_SESSION['cart'] ?? [];
 
             <div class="mt-4">
                 <a href="showProduct.php" class="btn btn-outline-secondary">🔙 กลับไปซื้อสินค้า</a>
-                <a href="checkout.php" class="btn btn-success">✅ ชำระเงิน</a>
+                <a href="formOrder.php" class="btn btn-success">✅ สั่งซื้อสินค้า</a>
             </div>
         <?php endif; ?>
     </div>

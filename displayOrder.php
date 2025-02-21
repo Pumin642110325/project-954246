@@ -10,11 +10,11 @@ include_once "./partials/navbar.php";
             <?php
             include_once "./partials/layout.php";
 
-            $userQuery = "SELECT count(*) AS total FROM product";
+            $userQuery = "SELECT count(*) AS total FROM class_order";
             $result = mysqli_query($connect, $userQuery);
             $row = mysqli_fetch_assoc($result);
             $count = $row['total'];
-            $userQuery = "SELECT * FROM product";
+            $userQuery = "SELECT * FROM class_order";
             $result = mysqli_query($connect, $userQuery);
             if (!$result) {
                 die("Could not successfully run the query $userQuery" . mysqli_error($connect));
@@ -23,7 +23,6 @@ include_once "./partials/navbar.php";
                 echo '
                     <div class="d-flex justify-content-between">
                         <p class="fs-3 fw-bold">รายการเครื่องดนตรี</p>
-                        <a href="formAddProduct.php" class="btn btn-warning mb-3">Create New Product</a>
                     </div>';
                 ?>
 
@@ -31,11 +30,14 @@ include_once "./partials/navbar.php";
                     <table class="table table-bordered table-hover">
                         <thead class="table-dark">
                             <tr class="fs-4">
-                                <th >Name</th>
-                                <th >Detail</th>
-                                <th >Price</th>
-                                <th >Qty</th>
-                                <th >Picture</th>
+                                <th scope="col">Order ID</th>
+                                <th scope="col">Product ID</th>
+                                <th scope="col">Firstname</th>
+                                <th scope="col">Lastname</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col">Address</th>
+                                <th scope="col">Actions</th>
                                 <?php if ($_SESSION['level'] >= 3): ?>
                                     <th scope="col">Action</th>
                                 <?php endif; ?>
@@ -49,17 +51,22 @@ include_once "./partials/navbar.php";
                             <?php else: ?>
                                 <?php while ($row = mysqli_fetch_assoc($result)): ?>
                                     <tr class="fs-5">
-                                        <td ><?= htmlspecialchars($row['productName']) ?></td>
-                                        <td ><?= htmlspecialchars($row['detail']) ?></td>
-                                        <td><?= htmlspecialchars($row['price']) ?></td>
-                                        <td><?= htmlspecialchars($row['qty']) ?></td>
-                                        <td><img src="<?= htmlspecialchars($row['picture']) ?>" alt="Product Image"
-                                                class="img-thumbnail" width="80"></td>
+                                        <td><?= $row['order_id'] ?></td>
+                                        <td><?= $row['productID'] ?></td>
+                                        <td><?= htmlspecialchars($row['firstname']) ?></td>
+                                        <td><?= htmlspecialchars($row['lastname']) ?></td>
+                                        <td><?= htmlspecialchars($row['email']) ?></td>
+                                        <td><?= htmlspecialchars($row['pnumber']) ?></td>
+                                        <td><?= htmlspecialchars($row['address']) ?></td>
+                                        <td>
+                                            <a href='order_detail.php?id=<?= $row['order_id'] ?>'
+                                                class="btn btn-primary btn-sm">ดูรายละเอียด</a>
+                                        </td>
                                         <?php if ($_SESSION['level'] >= 3): ?>
                                             <td>
-                                                <a href='updateProduct.php?id=<?= $row['productID'] ?>'
+                                                <a href='updateOrder.php?id=<?= $row['order_id'] ?>'
                                                     class="btn btn-warning btn-sm">Edit</a>
-                                                <a href='deleteProduct.php?id=<?= $row['productID'] ?>' class="btn btn-danger btn-sm"
+                                                <a href='deleteOrder.php?id=<?= $row['order_id'] ?>' class="btn btn-danger btn-sm"
                                                     onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
                                             </td>
                                         <?php endif; ?>
