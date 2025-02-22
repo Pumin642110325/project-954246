@@ -2,8 +2,14 @@
 session_start();
 require_once "config.php"; // Using $connect from this file
 
+// Check if user is logged in
+if (!isset($_SESSION['user_id'])) {
+    die("กรุณาเข้าสู่ระบบก่อนทำการสั่งซื้อ");
+}
+
+$user_id = $_SESSION['user_id']; // Get user_id from session
+
 // Get form data
-$user_id = $_SESSION['user_id'];
 $name = $_POST['name'] ?? '';
 $address = $_POST['address'] ?? '';
 $phone = $_POST['phone'] ?? '';
@@ -25,10 +31,10 @@ try {
     // Start transaction
     mysqli_begin_transaction($connect);
 
-    // Insert into orders table
+    // Insert into orders table with user_id
     $orderQuery = "INSERT INTO orders (user_id, customer_name, address, phone, total) VALUES (?, ?, ?, ?, ?)";
     $stmt = mysqli_prepare($connect, $orderQuery);
-    mysqli_stmt_bind_param($stmt, "isssd", $user_id, $customer_name, $address, $phone, $total);
+    mysqli_stmt_bind_param($stmt, "isssd", $user_id, $name, $address, $phone, $total);
     mysqli_stmt_execute($stmt);
 
     if (mysqli_stmt_affected_rows($stmt) <= 0) {
@@ -65,8 +71,10 @@ try {
     // Redirect to success page
     header("Location: orderSuccess.php");
     exit();
+
 } catch (Exception $e) {
     // Rollback transaction on error
     mysqli_rollback($connect);
     echo "เกิดข้อผิดพลาด: " . $e->getMessage();
 }
+?>
