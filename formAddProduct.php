@@ -1,83 +1,68 @@
-<?php
-include_once "./partials/layout.php";
-include_once "./partials/navbar.php";
-?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Employee</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
 
 <body>
-    <img src="./picture/background-violin.png" alt="background-header-violin" class="img-header-display-product" />
-    <div class="container mt-4">
-        <div class="main-content">
-            <?php
-            include_once "./partials/layout.php";
+    <?php 
+    include_once './partials/layout.php'; 
+    include_once './partials/navbar.php'; 
+    ?>
 
-            $userQuery = "SELECT count(*) AS total FROM product";
-            $result = mysqli_query($connect, $userQuery);
-            $row = mysqli_fetch_assoc($result);
-            $count = $row['total'];
-            $userQuery = "SELECT * FROM product";
-            $result = mysqli_query($connect, $userQuery);
-            if (!$result) {
-                die("Could not successfully run the query $userQuery" . mysqli_error($connect));
-            }
-            if ($_SESSION['level'] >= 3) {
-                echo '
-                    <div class="d-flex justify-content-between">
-                        <p class="fs-3 fw-bold">รายการเครื่องดนตรี</p>
-                        <a href="formAddProduct.php" class="btn btn-warning mb-3">Create New Product</a>
-                    </div>';
-                ?>
-
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-dark">
-                            <tr class="fs-4">
-                                <th >Name</th>
-                                <th >Detail</th>
-                                <th >Price</th>
-                                <th >Qty</th>
-                                <th >Picture</th>
-                                <?php if ($_SESSION['level'] >= 3): ?>
-                                    <th scope="col">Action</th>
-                                <?php endif; ?>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if (mysqli_num_rows($result) == 0): ?>
-                                <tr>
-                                    <tdcolspan="6" class="text-danger">No records were found</tdcolspan=>
-                                </tr>
-                            <?php else: ?>
-                                <?php while ($row = mysqli_fetch_assoc($result)): ?>
-                                    <tr class="fs-5">
-                                        <td ><?= htmlspecialchars($row['productName']) ?></td>
-                                        <td ><?= htmlspecialchars($row['detail']) ?></td>
-                                        <td><?= htmlspecialchars($row['price']) ?></td>
-                                        <td><?= htmlspecialchars($row['qty']) ?></td>
-                                        <td><img src="<?= htmlspecialchars($row['picture']) ?>" alt="Product Image"
-                                                class="img-thumbnail" width="80"></td>
-                                        <?php if ($_SESSION['level'] >= 3): ?>
-                                            <td>
-                                                <a href='updateProduct.php?id=<?= $row['productID'] ?>'
-                                                    class="btn btn-warning btn-sm">Edit</a>
-                                                <a href='deleteProduct.php?id=<?= $row['productID'] ?>' class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Are you sure you want to delete this record?');">Delete</a>
-                                            </td>
-                                        <?php endif; ?>
-                                    </tr>
-                                <?php endwhile; ?>
-                            <?php endif; ?>
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colspan="6" class="fw-bold">Total Records: <?= $count ?></td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            <?php } else {
-                echo "<div class='alert alert-danger'>You are unable to access the data, please try again</div>";
-            }
-            ?>
+    <div class="container mt-5">
+        <?php if($_SESSION['level'] >= 3) { ?>
+        <div class="card">
+            <div class="card-header bg-dark text-warning">
+                <h2 class="mb-0">Add New Product</h2>
+            </div>
+            <div class="card-body">
+                <form action="addProduct.php" method="post">
+                    <div class="mb-3">
+                        <label class="form-label">Department ID</label>
+                        <input type="text" class="form-control" value="Auto_increment" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <label for="productName" class="form-label">Product Name</label>
+                        <input type="text" class="form-control" id="productName" name="productName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="detail" class="form-label">Detail</label>
+                        <input type="text" class="form-control" id="detail" name="detail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="price" name="price" step="0.01" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="qty" class="form-label">Quantity</label>
+                        <input type="number" class="form-control" id="qty" name="qty" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="picture" class="form-label">Picture URL</label>
+                        <input type="text" class="form-control" id="picture" name="picture">
+                    </div>
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="displayProduct.php" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
+        <?php } else { ?>
+        <div class="alert alert-danger mt-4" role="alert">
+            <h4 class="alert-heading">Access Denied</h4>
+            <p>You are unable to access the data, please try again.</p>
+        </div>
+        <?php } ?>
     </div>
+
 </body>
+
+</html>
+<?php include_once  './partials/footer.php'; ?>
