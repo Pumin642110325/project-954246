@@ -13,7 +13,7 @@ $cart_count = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="displayProduct.php">Product</a></li>
-                    <li class="nav-item"><a class="nav-link" href="displayOrder.php">Order</a></li>
+                    <li class="nav-item"><a class="nav-link" href="showOrder.php">Order</a></li>
                     <li class="nav-item"><a class="nav-link" href="showSystemuser.php">System-user</a></li>
                 </ul>
 
