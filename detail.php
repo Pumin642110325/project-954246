@@ -22,31 +22,32 @@ if (!$product) {
 ?>
 
 <body>
-  <div class="container mt-4">
-    <div class="row">
-      <div class="col-md-6">
-        <img src="<?= htmlspecialchars($product['picture']) ?>" class="img-fluid"
-          alt="<?= htmlspecialchars($product['productName']) ?>">
-      </div>
-      <div class="col-md-6">
-        <h2><?= htmlspecialchars($product['productName']) ?></h2>
-        <p class="text-muted"><?= htmlspecialchars($product['detail']) ?></p>
-        <p><strong>Price:</strong> <?= htmlspecialchars($product['price']) ?> บาท</p>
-        <p><strong>Stock:</strong> <?= htmlspecialchars($product['qty']) ?></p>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="<?= htmlspecialchars($product['picture']) ?>" class="img-fluid"
+                    alt="<?= htmlspecialchars($product['productName']) ?>">
+            </div>
+            <div class="col-md-6">
+                <h2><?= htmlspecialchars($product['productName']) ?></h2>
+                <p class="text-muted"><?= htmlspecialchars($product['detail']) ?></p>
+                <p><strong>Price:</strong> <?= htmlspecialchars($product['price']) ?> บาท</p>
+                <p><strong>Stock:</strong> <?= htmlspecialchars($product['qty']) ?></p>
 
-        <!-- Form สำหรับเพิ่มสินค้าเข้าตะกร้า -->
-        <form action="cart.php" method="POST">
-          <input type="hidden" name="productID" value="<?= $product['productID'] ?>">
-          <input type="hidden" name="productName" value="<?= htmlspecialchars($product['productName']) ?>">
-          <input type="hidden" name="price" value="<?= $product['price'] ?>">
-          <input type="hidden" name="picture" value="<?= htmlspecialchars($product['picture']) ?>">
-          <label for="quantity">Quantity:</label>
-          <input type="number" name="quantity" value="1" min="1" max="<?= $product['qty'] ?>" class="form-control mb-2">
-          <button type="submit" name="add_to_cart" class="btn btn-warning">Add to Cart</button>
-        </form>
+                <!-- Form สำหรับเพิ่มสินค้าเข้าตะกร้า -->
+                <form action="cart.php" method="POST">
+                    <input type="hidden" name="productID" value="<?= $product['productID'] ?>">
+                    <input type="hidden" name="productName" value="<?= htmlspecialchars($product['productName']) ?>">
+                    <input type="hidden" name="price" value="<?= $product['price'] ?>">
+                    <input type="hidden" name="picture" value="<?= htmlspecialchars($product['picture']) ?>">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" name="quantity" value="1" min="1" max="<?= $product['qty'] ?>"
+                        class="form-control mb-2">
+                    <button type="submit" name="add_to_cart" class="btn btn-warning">Add to Cart</button>
+                </form>
 
-        <a href="showProduct.php" class="btn btn-secondary mt-2">Back to Shop</a>
-      </div>
+                <a href="showProduct.php" class="btn btn-secondary mt-2">Back to Shop</a>
+            </div>
+        </div>
     </div>
-  </div>
 </body>
