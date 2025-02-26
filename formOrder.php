@@ -9,7 +9,6 @@ if (empty($cart)) {
     header("Location: cart.php");
     exit();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -56,6 +55,32 @@ if (empty($cart)) {
                     <td colspan="3" class="text-end fw-bold">ราคารวมทั้งหมด:</td>
                     <td class="fw-bold"><?= number_format($total, 2) ?> บาท</td>
                 </tr>
+
+                <!-- ส่วนลด -->
+                <?php
+                $discount_percentage = 0;
+                $discount_amount = 0;
+                $final_total = $total;
+
+                // เงื่อนไข: ส่วนลด 10% ถ้ายอดรวมเกิน 1000 บาท
+                if ($total >= 1000) {
+                    $discount_percentage = 10;
+                    $discount_amount = ($total * $discount_percentage) / 100;
+                    $final_total = $total - $discount_amount;
+                }
+                ?>
+
+                <?php if ($discount_percentage > 0): ?>
+                <tr>
+                    <td colspan="3" class="text-end text-danger fw-bold">ส่วนลด (<?= $discount_percentage ?>%):</td>
+                    <td class="text-danger fw-bold">-<?= number_format($discount_amount, 2) ?> บาท</td>
+                </tr>
+                <?php endif; ?>
+
+                <tr>
+                    <td colspan="3" class="text-end fw-bold">ยอดสุทธิที่ต้องชำระ:</td>
+                    <td class="fw-bold"><?= number_format($final_total, 2) ?> บาท</td>
+                </tr>
             </tfoot>
         </table>
 
@@ -74,7 +99,9 @@ if (empty($cart)) {
                 <input type="tel" class="form-control" id="phone" name="phone" required>
             </div>
 
-            <input type="hidden" name="total" value="<?= $total ?>">
+            <!-- ส่งข้อมูลยอดรวมสุทธิไปที่ processOrder.php -->
+            <input type="hidden" name="total" value="<?= $final_total ?>">
+
             <a href="showCart.php" class="btn btn-secondary">🔙 กลับไปตะกร้าสินค้า</a>
             <button type="submit" class="btn btn-primary">✅ ยืนยันการสั่งซื้อ</button>
         </form>

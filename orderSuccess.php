@@ -21,7 +21,12 @@ include_once "./partials/navbar.php";
 
         <div class="mt-4">
             <a href="showProduct.php" class="btn btn-primary">🛍️ กลับไปหน้ารายการสินค้า</a>
-            <a href="showOrder.php" class="btn btn-success">📋 ดูรายการสั่งซื้อของฉัน</a>
+            <a href="showOrder.php" class="btn btn-success">📋 ดูรายการสั่งซื้อของฉัน</a><br><br>
+        </div>
+
+        <div class="mt-5">
+            <h4>สแกน QR Code เพื่อชำระเงิน</h4>
+            <img src="./picture/qrcode.png" alt="purchase" class="img-fluid mt-3" style="max-width: 300px;">
         </div>
     </div>
 </body>
