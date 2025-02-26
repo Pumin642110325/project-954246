@@ -32,7 +32,7 @@ $cart_count = isset($_SESSION['cart']) ? array_sum(array_column($_SESSION['cart'
                     </li>
 
                     <li class="nav-item"><a class="nav-link" href="showOrder.php">Order</a></li>
-                    <li class="nav-item"><a class="nav-link" href="showSystemuser.php">System-user</a></li>
+                    <li class="nav-item"><a class="nav-link" href="showAboutus.php">About us</a></li>
                 </ul>
 
                 <!-- Right-aligned menu -->

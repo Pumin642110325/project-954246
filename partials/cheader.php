@@ -28,7 +28,7 @@ require_once "config.php";
             <li><a href="index.php">Home</a></li>
             <li><a href="displayProduct.php">Product</a></li>
             <li><a href="displayOrder.php">Order</a></li>
-            <li><a href="showSystemuser.php">System-user</a></li>
+            <li><a href="showAboutus.php">About us</a></li>
             <?php
                 if (isset($_SESSION['username'])) {
                 echo '<li><a href="logout.php">Logout - </a>';

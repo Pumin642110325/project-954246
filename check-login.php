@@ -35,6 +35,7 @@
                     $_SESSION['firstname'] = $row['firstname'];
                     $_SESSION['lastname'] = $row['lastname'];
                     $_SESSION['level'] = $row['level'];
+                    $_SESSION['detail_id'] = $row['detail_id'];
 
                     // Clear cart after login
                     unset($_SESSION['cart']);

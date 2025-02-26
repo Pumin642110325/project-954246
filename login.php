@@ -1,10 +1,10 @@
-<?php 
+<?php
 session_start();
-$title = "Login Page"; 
+$title = "Login Page";
 include_once "config.php";
 include_once "./partials/layout.php";
 $bgImage = "./picture/background-violin-notext.jpg"
-?>
+    ?>
 
 <div class='d-flex flex-column flex-grow-1 container-fluid justify-content-center align-items-center' style="background-image: url('<?php echo $bgImage; ?>'); background-size: cover; background-position: center; height: 100vh;">
     <div class="login-wrap">
@@ -27,8 +27,10 @@ $bgImage = "./picture/background-violin-notext.jpg"
             </div>
 
             <button type="submit" class="btn btn-warning w-100">Login</button>
+            <br><br>
+            <p>Don't have an account? <a href="addcusinfo.php">Register here</a></p>
         </form>
     </div>
 </div>
 
-<?php include_once  './partials/footer.php'; ?>
+<?php include_once './partials/footer.php'; ?>
