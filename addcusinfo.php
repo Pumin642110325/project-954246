@@ -1,10 +1,10 @@
-ใช้พื้นที่เก็บข้อมูลไป 80% … หากพื้นที่เต็ม คุณจะสร้าง แก้ไข และอัปโหลดไฟล์ไม่ได้ รับพื้นที่เก็บข้อมูลขนาด 100 GB ในราคา ฿70.00 ฿17.00/เดือน เป็นเวลา 2 เดือน
+
 <?php 
-$title = "Register"; 
+$title = "Login Page";
 include_once "config.php";
 include_once "./partials/layout.php";
-$bgImage = "background-violin-notext.jpg"
-?>
+$bgImage = "./picture/background-violin-notext.jpg"
+    ?>
 
 <div class='d-flex flex-column flex-grow-1 container-fluid justify-content-center align-items-center' style="background-image: url('<?php echo $bgImage; ?>'); background-size: cover; background-position: center; height: 100vh;">
     <div class="login-wrap">
