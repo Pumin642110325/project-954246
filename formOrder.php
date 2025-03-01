@@ -5,6 +5,17 @@ include_once "./partials/navbar.php";
 
 $cart = $_SESSION['cart'] ?? [];
 
+// ตรวจสอบว่าผู้ใช้เข้าสู่ระบบ
+if (!isset($_SESSION['user_id'])) {
+    echo '<div class="container mt-5 text-center">
+        <h3>กรุณาเข้าสู่ระบบเพื่อทำรายการ</h3>
+        <a href="login.php" class="btn btn-primary mt-3">🔑 กลับไปหน้าเข้าสู่ระบบ</a>
+    </div>';
+    exit();
+}
+
+$user_level = $_SESSION['level'] ?? 1; // ถ้าไม่ได้ล็อกอินให้เป็น Level 1
+
 if (empty($cart)) {
     header("Location: cart.php");
     exit();
@@ -56,18 +67,17 @@ if (empty($cart)) {
                     <td class="fw-bold"><?= number_format($total, 2) ?> บาท</td>
                 </tr>
 
-                <!-- ส่วนลด -->
+                <!-- คำนวณส่วนลดตามระดับของผู้ใช้ -->
                 <?php
                 $discount_percentage = 0;
-                $discount_amount = 0;
-                $final_total = $total;
-
-                // เงื่อนไข: ส่วนลด 10% ถ้ายอดรวมเกิน 1000 บาท
-                if ($total >= 1000) {
-                    $discount_percentage = 10;
-                    $discount_amount = ($total * $discount_percentage) / 100;
-                    $final_total = $total - $discount_amount;
+                if ($user_level == 2) {
+                    $discount_percentage = 10; // Level 2 ได้ส่วนลด 10%
+                } elseif ($user_level == 3) {
+                    $discount_percentage = 0; // Level 3 ไม่มีส่วนลด
                 }
+
+                $discount_amount = ($total * $discount_percentage) / 100;
+                $final_total = $total - $discount_amount;
                 ?>
 
                 <?php if ($discount_percentage > 0): ?>
@@ -101,6 +111,8 @@ if (empty($cart)) {
 
             <!-- ส่งข้อมูลยอดรวมสุทธิไปที่ processOrder.php -->
             <input type="hidden" name="total" value="<?= $final_total ?>">
+            <input type="hidden" name="discount_amount" value="<?= $discount_amount ?>">
+            <input type="hidden" name="discount_percentage" value="<?= $discount_percentage ?>">
 
             <a href="showCart.php" class="btn btn-secondary">🔙 กลับไปตะกร้าสินค้า</a>
             <button type="submit" class="btn btn-primary">✅ ยืนยันการสั่งซื้อ</button>

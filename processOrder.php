@@ -34,7 +34,7 @@ $discount_percentage = 0;
 if ($user_level == 2) {
     $discount_percentage = 10; // ส่วนลด 10% สำหรับเลเวล 2
 } elseif ($user_level == 3) {
-    $discount_percentage = 20; // ส่วนลด 20% สำหรับเลเวล 3
+    $discount_percentage = 0; 
 }
 
 $discount_amount = ($total * $discount_percentage) / 100; // จำนวนเงินส่วนลด

@@ -17,6 +17,7 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 $user_level = $_SESSION['level'];
 
+// Check if 'user_id' column exists in 'orders' table
 $columnsQuery = "SHOW COLUMNS FROM orders LIKE 'user_id'";
 $columnsResult = mysqli_query($connect, $columnsQuery);
 
@@ -47,10 +48,17 @@ if (mysqli_num_rows($columnsResult) == 0) {
         <?php
         // Admin (level 3) can see all orders
         if ($user_level == 3) {
-            $orderQuery = "SELECT o.*, u.username FROM orders o JOIN systemuser u ON o.user_id = u.user_id ORDER BY o.created_at DESC";
+            $orderQuery = "SELECT o.*, u.username, u.level AS order_user_level 
+                           FROM orders o 
+                           JOIN systemuser u ON o.user_id = u.user_id 
+                           ORDER BY o.created_at DESC";
         } else {
             // Regular user can see only their orders
-            $orderQuery = "SELECT * FROM orders WHERE user_id = ? ORDER BY created_at DESC";
+            $orderQuery = "SELECT o.*, u.level AS order_user_level 
+                           FROM orders o 
+                           JOIN systemuser u ON o.user_id = u.user_id 
+                           WHERE o.user_id = ? 
+                           ORDER BY o.created_at DESC";
         }
 
         // Prepare and execute the query
@@ -63,6 +71,7 @@ if (mysqli_num_rows($columnsResult) == 0) {
 
             if (mysqli_num_rows($result) > 0):
                 while ($order = mysqli_fetch_assoc($result)):
+                    $order_user_level = $order['order_user_level']; // Level ของคนที่สั่งซื้อ
                     ?>
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -145,20 +154,14 @@ if (mysqli_num_rows($columnsResult) == 0) {
                                         <td><?= number_format($order_total, 2); ?> บาท</td>
                                     </tr>
                                     <?php
-                                    // คำนวณส่วนลดตามเลเวลผู้ใช้
-                                    $discount_percentage = 0;
-                                    if ($user_level == 2) {
-                                        $discount_percentage = 10;
-                                    } elseif ($user_level == 3) {
-                                        $discount_percentage = 20;
-                                    }
+                                    // คำนวณส่วนลดตามเลเวลของ User ที่สั่งซื้อ
+                                    $discount_percentage = ($order_user_level == 2) ? 10 : 0;
                                     $discount_amount = ($order_total * $discount_percentage) / 100;
                                     $final_total = $order_total - $discount_amount;
                                     ?>
                                     <?php if ($discount_percentage > 0): ?>
                                         <tr>
-                                            <td colspan="3" class="text-end text-danger"><strong>ส่วนลด
-                                                    (<?= $discount_percentage; ?>%):</strong></td>
+                                            <td colspan="3" class="text-end text-danger"><strong>ส่วนลด (<?= $discount_percentage; ?>%):</strong></td>
                                             <td class="text-danger">-<?= number_format($discount_amount, 2); ?> บาท</td>
                                         </tr>
                                     <?php endif; ?>
@@ -168,9 +171,6 @@ if (mysqli_num_rows($columnsResult) == 0) {
                                     </tr>
                                 </tfoot>
                             </table>
-
-                            <p><strong>ที่อยู่จัดส่ง:</strong> <?= nl2br(htmlspecialchars($order['address'])); ?></p>
-                            <p><strong>เบอร์โทรศัพท์:</strong> <?= htmlspecialchars($order['phone']); ?></p>
                         </div>
                     </div>
                     <?php
@@ -178,19 +178,8 @@ if (mysqli_num_rows($columnsResult) == 0) {
             else:
                 echo "<div class='alert alert-info'>ไม่มีคำสั่งซื้อที่บันทึกไว้</div>";
             endif;
-
-            mysqli_stmt_close($stmt);
-        } else {
-            echo "<div class='alert alert-danger'>เกิดข้อผิดพลาดในการดึงข้อมูลคำสั่งซื้อ</div>";
         }
         ?>
-
-        <div class="mt-4">
-            <a href="showProduct.php" class="btn btn-primary">🛍️ กลับไปหน้ารายการสินค้า</a>
-        </div>
     </div>
-
-    <?php include_once "./partials/footer.php"; ?>
 </body>
-
 </html>

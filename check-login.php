@@ -3,33 +3,33 @@
 <div class="error">
     <?php
     session_start();
-    include_once "config.php";
+    include_once "config.php"; // เชื่อมต่อฐานข้อมูล
 
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $username = mysqli_real_escape_string($connect, $_POST['username']);
-        $password = mysqli_real_escape_string($connect, $_POST['password']);
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') { // ตรวจสอบว่ามีการส่งข้อมูลผ่าน POST หรือไม่
+        $username = mysqli_real_escape_string($connect, $_POST['username']); // รับค่า username และป้องกัน SQL Injection
+        $password = mysqli_real_escape_string($connect, $_POST['password']); // รับค่า password และป้องกัน SQL Injection
 
-        // Prepare query to prevent SQL injection
+        // คำสั่ง SQL เพื่อดึงข้อมูลผู้ใช้จากฐานข้อมูล
         $userQuery = "SELECT u.*, e.firstname, e.lastname FROM systemuser AS u 
                       INNER JOIN user_detail AS e ON u.detail_id = e.detail_id 
                       WHERE u.username = ?";
 
-        if ($stmt = mysqli_prepare($connect, $userQuery)) {
-            mysqli_stmt_bind_param($stmt, "s", $username);
-            mysqli_stmt_execute($stmt);
-            $result = mysqli_stmt_get_result($stmt);
+        if ($stmt = mysqli_prepare($connect, $userQuery)) { // เตรียมคำสั่ง SQL
+            mysqli_stmt_bind_param($stmt, "s", $username); // ใส่ค่า username ลงไปใน SQL
+            mysqli_stmt_execute($stmt); // รันคำสั่ง SQL
+            $result = mysqli_stmt_get_result($stmt); // ดึงผลลัพธ์จากคำสั่ง SQL
 
-            if (mysqli_num_rows($result) == 0) {
-                $_SESSION['errors_msg'] = "Username or Password is incorrect.";
-                header("Location: login.php");
+            if (mysqli_num_rows($result) == 0) { // ถ้าไม่มีข้อมูลผู้ใช้ในฐานข้อมูล
+                $_SESSION['errors_msg'] = "Username or Password is incorrect."; // บันทึกข้อความผิดพลาดลง Session
+                header("Location: login.php"); // กลับไปที่หน้า login
                 exit();
             } else {
-                $row = mysqli_fetch_assoc($result);
+                $row = mysqli_fetch_assoc($result); // ดึงข้อมูลของผู้ใช้
 
-                // Compare passwords (assuming plaintext, replace with password_verify if hashed)
+                // ตรวจสอบรหัสผ่าน (ใช้การเปรียบเทียบแบบปกติ)
                 if ($password == $row['password']) {
 
-                    // Set session variables
+                    // เก็บข้อมูลผู้ใช้ลงในตัวแปรเซสชัน
                     $_SESSION['user_id'] = $row['user_id'];
                     $_SESSION['username'] = $row['username'];
                     $_SESSION['firstname'] = $row['firstname'];
@@ -37,10 +37,10 @@
                     $_SESSION['level'] = $row['level'];
                     $_SESSION['detail_id'] = $row['detail_id'];
 
-                    // Clear cart after login
+                    // เคลียร์ตะกร้าสินค้าใน Session (ถ้ามี)
                     unset($_SESSION['cart']);
 
-                    // Redirect based on user level
+                    // ตรวจสอบระดับผู้ใช้และเปลี่ยนเส้นทางไปยังหน้าที่เหมาะสม
                     if ($_SESSION['level'] == 1 || $_SESSION['level'] == 2) {
                         header("Location: showProduct.php");
                     } elseif ($_SESSION['level'] == 3) {
@@ -50,18 +50,17 @@
                     }
                     exit();
                 } else {
-                    $_SESSION['errors_msg'] = "Username or Password is incorrect.";
-                    header("Location: login.php");
+                    $_SESSION['errors_msg'] = "Username or Password is incorrect."; // แจ้งเตือนว่ารหัสผ่านไม่ถูกต้อง
+                    header("Location: login.php"); // กลับไปที่หน้า login
                     exit();
                 }
             }
 
-            mysqli_stmt_close($stmt);
+            mysqli_stmt_close($stmt); // ปิด Statement เพื่อคืนทรัพยากร
         } else {
-            echo "Error: " . mysqli_error($connect);
+            echo "Error: " . mysqli_error($connect); // แสดงข้อผิดพลาดของ MySQL ถ้ามีปัญหาในการรัน SQL
         }
     }
     ?>
 </div>
-
 </html>
