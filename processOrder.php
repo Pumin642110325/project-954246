@@ -57,16 +57,41 @@ try {
     // ดึง ID คำสั่งซื้อที่เพิ่มล่าสุด
     $order_id = mysqli_insert_id($connect);
 
-    // บันทึกรายการสินค้าลงในตาราง order_items
+    // บันทึกรายการสินค้าลงในตาราง order_items และทำการตัดสต็อก
     $itemQuery = "INSERT INTO order_items (order_id, product_name, price, quantity, subtotal) VALUES (?, ?, ?, ?, ?)";
     $stmtItem = mysqli_prepare($connect, $itemQuery);
 
     foreach ($cart as $item) {
         $productName = htmlspecialchars($item['productName']);
+        $productID = intval($item['productID']); // ดึง ID ของสินค้า
         $price = floatval($item['price']);
         $quantity = intval($item['quantity']);
         $subtotal = $price * $quantity;
 
+        // ตรวจสอบว่าสินค้ามีสต็อกพอหรือไม่
+        $stockCheckQuery = "SELECT qty FROM product WHERE productID  = ?";
+        $stmtStockCheck = mysqli_prepare($connect, $stockCheckQuery);
+        mysqli_stmt_bind_param($stmtStockCheck, "i", $productID);
+        mysqli_stmt_execute($stmtStockCheck);
+        $result = mysqli_stmt_get_result($stmtStockCheck);
+        $row = mysqli_fetch_assoc($result);
+
+        if (!$row || $row['qty'] < $quantity) {
+            throw new Exception("สินค้า $productName มีไม่พอในสต็อก!");
+        }
+
+        // ลดสต็อกสินค้า
+        $newStock = $row['qty'] - $quantity;
+        $updateStockQuery = "UPDATE product SET qty = ? WHERE productID  = ?";
+        $stmtUpdateStock = mysqli_prepare($connect, $updateStockQuery);
+        mysqli_stmt_bind_param($stmtUpdateStock, "ii", $newStock, $productID);
+        mysqli_stmt_execute($stmtUpdateStock);
+
+        if (mysqli_stmt_affected_rows($stmtUpdateStock) <= 0) {
+            throw new Exception("ไม่สามารถอัปเดตสต็อกสินค้า $productName ได้");
+        }
+
+        // บันทึกรายการสินค้า
         mysqli_stmt_bind_param($stmtItem, "isdid", $order_id, $productName, $price, $quantity, $subtotal);
         mysqli_stmt_execute($stmtItem);
 
