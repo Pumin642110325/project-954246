@@ -42,7 +42,7 @@
 
                     // ตรวจสอบระดับผู้ใช้และเปลี่ยนเส้นทางไปยังหน้าที่เหมาะสม
                     if ($_SESSION['level'] == 1 || $_SESSION['level'] == 2) {
-                        header("Location: showProduct.php");
+                        header("Location: index.php");
                     } elseif ($_SESSION['level'] == 3) {
                         header("Location: displayProduct.php");
                     } else {
